@@ -10,7 +10,10 @@ export class React {
     static h() {}
 }
 
-export function h(){
-
-    const a =123;
+// TODO use VNode to represent DOM Nodes
+export function h(node: string, props: any, children: any[]){
+    if (typeof node === 'string') {
+        return document.createTextNode(node);
+    }
+    return document.createElement(node);
 }

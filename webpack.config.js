@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
     mode: "development", // "production" | "development" | "none"  // Chosen mode tells webpack to use its built-in optimizations accordingly.
     entry: "./src/index.tsx", // string | object | array  // defaults to ./src
-    
+    context: path.resolve(__dirname),
     // Here the application starts executing
     // and webpack starts bundling
     output: {
