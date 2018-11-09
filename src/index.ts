@@ -3,11 +3,15 @@ export class Component {
     tpl: string;
     selector: string;
 
+    private renderedPrev;
+
     render() {
         const rendered = Object.keys(this.data).reduce((p, k) => {
             return p.replace(`\{${k}\}`, this.data[k]);
         }, this.tpl);
-        document.querySelector(this.selector).innerHTML = rendered;
+        this.renderedPrev = rendered;
+        const container = document.querySelector(this.selector);
+        container.innerHTML = rendered;
 
         // bind events after dom rendered
         setTimeout(() => {
@@ -20,7 +24,7 @@ export class Component {
 
     private bindMutator(ele: Element) {
         const key = ele.getAttribute('v-model').slice(1, -1);
-        ele.addEventListener('input', (e) => this.data[key] = (e.target as any).value)
+        ele.addEventListener('change', (e) => this.data[key] = (e.target as any).value)
     }
 }
 
