@@ -74,7 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "c7312bf1183d07ea3e2f";
+/******/ 	var hotCurrentHash = "7b493f272e209a26a410";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -799,56 +799,121 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return hotCreateRequire("./src/index.tsx")(__webpack_require__.s = "./src/index.tsx");
+/******/ 	return hotCreateRequire("./test/index.ts")(__webpack_require__.s = "./test/index.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/index.tsx":
+/***/ "./src/index.ts":
+/*!**********************!*\
+  !*** ./src/index.ts ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var Component = (function () {
+    function Component() {
+    }
+    Component.prototype.render = function () {
+        var _this = this;
+        var rendered = Object.keys(this.data).reduce(function (p, k) {
+            return p.replace("{" + k + "}", _this.data[k]);
+        }, this.tpl);
+        document.querySelector(this.selector).innerHTML = rendered;
+    };
+    return Component;
+}());
+exports.Component = Component;
+function BiBinding(constructor) {
+    return (function (_super) {
+        __extends(class_1, _super);
+        function class_1() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(class_1.prototype, "data", {
+            get: function () {
+                return this._data;
+            },
+            set: function (value) {
+                this._data = value;
+                this.render();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return class_1;
+    }(Component));
+}
+exports.BiBinding = BiBinding;
+
+
+/***/ }),
+
+/***/ "./test/index.ts":
 /*!***********************!*\
-  !*** ./src/index.tsx ***!
+  !*** ./test/index.ts ***!
   \***********************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-exports.__esModule = true;
-var index_1 = __webpack_require__(/*! ./lib/index */ "./src/lib/index.ts");
-var a = (index_1.h("div", { id: "hei" },
-    index_1.h("div", null, "a"),
-    index_1.h("div", null, "b")));
-console.log(a);
-
-
-/***/ }),
-
-/***/ "./src/lib/index.ts":
-/*!**************************!*\
-  !*** ./src/lib/index.ts ***!
-  \**************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-exports.__esModule = true;
-var VNode = (function () {
-    function VNode(nodeName, attributes, children) {
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
     }
-    return VNode;
-}());
-var React = (function () {
-    function React() {
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var src_1 = __webpack_require__(/*! ../src */ "./src/index.ts");
+var MyComponent = (function (_super) {
+    __extends(MyComponent, _super);
+    function MyComponent() {
+        var _this = _super.call(this) || this;
+        _this.data = {
+            prop1: 1,
+        };
+        _this.tpl = "\n        <input v-model={prop1} placeholder=\"edit prop1 here\" />\n        <p>{prop1}</p>\n    ";
+        _this.selector = '#app-root';
+        console.log(_this);
+        return _this;
     }
-    React.h = function () { };
-    return React;
-}());
-exports.React = React;
-function h() {
-    var a = 123;
-}
-exports.h = h;
+    MyComponent = __decorate([
+        src_1.BiBinding
+    ], MyComponent);
+    return MyComponent;
+}(src_1.Component));
+var c = new MyComponent();
+c.render();
 
 
 /***/ })

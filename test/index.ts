@@ -1,17 +1,27 @@
-function classDecorator<T extends {new(...args:any[]):{}}>(constructor:T) {
-    return class extends constructor {
-        newProperty = "new property";
-        hello = "override";
+import { BiBinding, Component } from '../src';
+
+@BiBinding
+class MyComponent extends Component {
+    data = {
+        prop1: 1,
+    }
+
+    tpl = `
+        <input v-model=[prop1] placeholder="edit prop1 here" />
+        <p>{prop1}</p>
+    `;
+
+    selector = '#app-root';
+
+    constructor() {
+        super();
+        console.log(this);
+        setInterval(() => {
+            this.data.prop1++;
+            console.log(1);
+        }, 1000);
     }
 }
 
-@classDecorator
-class Greeter {
-    property = "property";
-    hello: string;
-    constructor(m: string) {
-        this.hello = m;
-    }
-}
-
-console.log(new Greeter("world"));
+const c = new MyComponent();
+c.render();
