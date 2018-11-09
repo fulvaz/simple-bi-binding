@@ -8,6 +8,19 @@ export class Component {
             return p.replace(`\{${k}\}`, this.data[k]);
         }, this.tpl);
         document.querySelector(this.selector).innerHTML = rendered;
+
+        // bind events after dom rendered
+        setTimeout(() => {
+            const vModels = document.querySelectorAll('[v-model]');
+            vModels.forEach(e => {
+                this.bindMutator(e);
+            });
+        }, 0);
+    }
+
+    private bindMutator(ele: Element) {
+        const key = ele.getAttribute('v-model').slice(1, -1);
+        ele.addEventListener('input', (e) => this.data[key] = (e.target as any).value)
     }
 }
 

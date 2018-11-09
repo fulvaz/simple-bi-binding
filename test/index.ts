@@ -16,10 +16,10 @@ class MyComponent extends Component {
     constructor() {
         super();
         console.log(this);
-        setInterval(() => {
-            this.data.prop1++;
-            console.log(1);
-        }, 1000);
+        // setInterval(() => {
+        //     this.data.prop1++;
+        //     console.log(1);
+        // }, 1000);
     }
 }
 
